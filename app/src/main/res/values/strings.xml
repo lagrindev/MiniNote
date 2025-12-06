@@ -1,3 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MyAppsTest</string>
+    <!-- Название приложения -->
+    <string name="app_name">MiniNote</string>
+
+    <!-- Подсказка в EditText -->
+    <string name="hint_note_input">Введите заметку</string>
+
+    <!-- Текст на кнопке -->
+    <string name="button_save">Сохранить</string>
+
+    <!-- Текст для вывода заметки (можно оставить пустым по умолчанию) -->
+    <string name="note_output">Здесь будет ваша заметка</string>
 </resources>

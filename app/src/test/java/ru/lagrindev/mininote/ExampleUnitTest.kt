@@ -1,4 +1,4 @@
-package ru.lagrindev.MyAppsTest
+package ru.lagrindev.mininote
 
 import org.junit.Test
 

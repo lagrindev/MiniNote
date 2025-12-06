@@ -1,4 +1,4 @@
-package ru.lagrindev.MyAppsTest.ui.theme
+package ru.lagrindev.mininote.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

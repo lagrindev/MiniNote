@@ -9,13 +9,18 @@
         android:id="@+id/noteInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите заметку" />
+        android:hint="@string/hint_note_input"
+        android:inputType="textMultiLine"
+        android:autofillHints="none"
+        android:lines="4"
+        android:gravity="top|start"
+        android:scrollbars="vertical" />
 
     <Button
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Сохранить"
+        android:text="@string/button_save"
         android:layout_marginTop="16dp" />
 
     <TextView
@@ -23,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        android:text="@string/note_output" />
 
 </LinearLayout>

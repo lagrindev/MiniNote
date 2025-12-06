@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "ru.lagrindev.MyAppsTest"
+    namespace = "ru.lagrindev.mininote"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "ru.lagrindev.MyAppsTest"
+        applicationId = "ru.lagrindev.mininote"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

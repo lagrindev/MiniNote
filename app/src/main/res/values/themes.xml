@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.MyAppsTest" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MiniNote" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Можно добавить цвета, но не обязательно -->
     </style>
 

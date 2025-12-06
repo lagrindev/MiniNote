@@ -1,8 +1,8 @@
-package ru.lagrindev.MyAppsTest
+package ru.lagrindev.mininote
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import ru.lagrindev.MyAppsTest.databinding.ActivityMainBinding
+import ru.lagrindev.mininote.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
