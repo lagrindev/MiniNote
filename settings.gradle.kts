@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MyAppsTest"
+rootProject.name = "MiniNote"
 include(":app")
