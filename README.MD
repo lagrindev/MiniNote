@@ -19,7 +19,7 @@ Room	база данных
 🖼️ Скриншоты
 
 
-<p align="center"> <img src="/screenshots/home.png" width="250"> <img src="/screenshots/edit.png" width="250"> </p>
+<p align="center"> <img src="/screenshot/home.png" width="250"> <img src="/screenshot/info.png" width="250"> </p>
 📥 Установка
 
 Скачайте последний APK в разделе:
