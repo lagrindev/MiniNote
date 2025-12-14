@@ -41,6 +41,7 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -64,6 +65,10 @@ dependencies {
 
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    debugImplementation("androidx.compose.ui:ui-tooling-preview:1.7.0")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.0")
+    debugImplementation("androidx.compose.ui:ui-tooling-preview")
+
 
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.13.0")
@@ -73,4 +78,9 @@ dependencies {
     implementation("androidx.room:room-runtime:2.8.4")
     kapt("androidx.room:room-compiler:2.8.4") // если используешь kapt
     implementation("androidx.room:room-ktx:2.8.4") // Kotlin extensions
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+
+// Kotlin coroutines (если ещё нет)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("androidx.datastore:datastore-preferences:1.1.0")
 }
