@@ -15,8 +15,12 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotesScreen(notes: List<Note>, viewModel: NotesViewModel) {
+fun NotesScreen(
+    notes: List<Note>,
+    viewModel: NotesViewModel
+) {
     val scope = rememberCoroutineScope()
+
     var newNote by remember { mutableStateOf("") }
     var showEditDialog by remember { mutableStateOf(false) }
     var noteToEdit by remember { mutableStateOf<Note?>(null) }
@@ -25,22 +29,24 @@ fun NotesScreen(notes: List<Note>, viewModel: NotesViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
-        // Ввод новой заметки
+
+        /* ===== Поле добавления заметки ===== */
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             TextField(
                 value = newNote,
                 onValueChange = { newNote = it },
                 placeholder = { Text("Что нового?") },
+                singleLine = true,
+                shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
                     .weight(1f)
-                    .height(56.dp),
-                shape = RoundedCornerShape(16.dp),
-                singleLine = true,
+                    .defaultMinSize(minHeight = 56.dp),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.surface,
                     unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -49,7 +55,9 @@ fun NotesScreen(notes: List<Note>, viewModel: NotesViewModel) {
                     unfocusedIndicatorColor = MaterialTheme.colorScheme.surfaceVariant
                 )
             )
+
             Spacer(modifier = Modifier.width(8.dp))
+
             Button(
                 onClick = {
                     if (newNote.isNotBlank()) {
@@ -60,7 +68,8 @@ fun NotesScreen(notes: List<Note>, viewModel: NotesViewModel) {
                     }
                 },
                 shape = RoundedCornerShape(16.dp),
-                modifier = Modifier.height(56.dp)
+                modifier = Modifier
+                    .defaultMinSize(minHeight = 56.dp)
             ) {
                 Text("Добавить")
             }
@@ -68,8 +77,11 @@ fun NotesScreen(notes: List<Note>, viewModel: NotesViewModel) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Список заметок с анимацией изменения размера
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        /* ===== Список заметок ===== */
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             items(notes) { note ->
                 Card(
                     modifier = Modifier
@@ -87,7 +99,7 @@ fun NotesScreen(notes: List<Note>, viewModel: NotesViewModel) {
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer
                     ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
                 ) {
                     Text(
                         text = note.text,
@@ -99,7 +111,7 @@ fun NotesScreen(notes: List<Note>, viewModel: NotesViewModel) {
         }
     }
 
-    // Диалог редактирования заметки
+    /* ===== Диалог редактирования ===== */
     if (showEditDialog && noteToEdit != null) {
         AlertDialog(
             onDismissRequest = { showEditDialog = false },
@@ -108,8 +120,10 @@ fun NotesScreen(notes: List<Note>, viewModel: NotesViewModel) {
                 TextField(
                     value = editedText,
                     onValueChange = { editedText = it },
-                    modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .defaultMinSize(minHeight = 56.dp),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = MaterialTheme.colorScheme.surface,
                         unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -123,19 +137,27 @@ fun NotesScreen(notes: List<Note>, viewModel: NotesViewModel) {
                 TextButton(
                     onClick = {
                         scope.launch {
-                            noteToEdit?.let { viewModel.updateNote(it, editedText) }
+                            noteToEdit?.let {
+                                viewModel.updateNote(it, editedText)
+                            }
                         }
                         showEditDialog = false
                     }
-                ) { Text("Сохранить") }
+                ) {
+                    Text("Сохранить")
+                }
             },
             dismissButton = {
                 TextButton(
                     onClick = {
-                        scope.launch { noteToEdit?.let { viewModel.deleteNote(it) } }
+                        scope.launch {
+                            noteToEdit?.let { viewModel.deleteNote(it) }
+                        }
                         showEditDialog = false
                     }
-                ) { Text("Удалить") }
+                ) {
+                    Text("Удалить")
+                }
             }
         )
     }
