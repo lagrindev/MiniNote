@@ -1,9 +1,12 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package ru.lagrindev.mininote
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
@@ -12,15 +15,20 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.room.Room
+import ru.lagrindev.mininote.ui.theme.MiniNoteTheme
 
 class MainActivity : ComponentActivity() {
 
     private val db by lazy {
-        Room.databaseBuilder(applicationContext, AppDatabase::class.java, "notes.db")
-            // Для продакшена подключаем миграции
+        Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "notes.db"
+        )
             .addMigrations(AppDatabase.MIGRATION_1_2)
             .build()
     }
@@ -29,32 +37,43 @@ class MainActivity : ComponentActivity() {
         NotesVMFactory(NotesRepository(db.noteDao()))
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        // SplashScreen (Android 12+)
+        installSplashScreen()
+
         super.onCreate(savedInstanceState)
 
         setContent {
-            var darkTheme by remember { mutableStateOf(true) }
-            var selectedTab by remember { mutableStateOf(0) }
 
             val notes by viewModel.notes.collectAsState(initial = emptyList())
 
-            MaterialTheme(
-                colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme()
-            ) {
+            var selectedTab by rememberSaveable { mutableStateOf(0) }
+
+            // временно: системная тема
+            val darkTheme = isSystemInDarkTheme()
+
+            MiniNoteTheme(darkTheme = darkTheme) {
+
                 Scaffold(
                     topBar = {
                         CenterAlignedTopAppBar(
                             title = {
-                                Text(if (selectedTab == 0) "Мини Заметки" else "Информация")
+                                Text(
+                                    text = if (selectedTab == 0)
+                                        "Мини Заметки"
+                                    else
+                                        "Информация"
+                                )
                             },
                             actions = {
-                                IconButton(onClick = { darkTheme = !darkTheme }) {
-                                    Icon(
-                                        if (darkTheme) Icons.Default.LightMode else Icons.Default.DarkMode,
-                                        contentDescription = null
-                                    )
-                                }
+                                Icon(
+                                    imageVector = if (darkTheme)
+                                        Icons.Default.DarkMode
+                                    else
+                                        Icons.Default.LightMode,
+                                    contentDescription = null
+                                )
                             }
                         )
                     },
@@ -74,17 +93,19 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     }
-                ) { padding ->
+                ) { innerPadding ->
+
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(padding)
-                            .padding(16.dp)
+                            .padding(innerPadding)
                     ) {
-                        if (selectedTab == 0) {
-                            NotesScreen(notes, viewModel)
-                        } else {
-                            InfoScreen()
+                        when (selectedTab) {
+                            0 -> NotesScreen(
+                                notes = notes,
+                                viewModel = viewModel
+                            )
+                            1 -> InfoScreen()
                         }
                     }
                 }
