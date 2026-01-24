@@ -20,39 +20,26 @@ import androidx.core.net.toUri
 
 @Composable
 fun InfoScreen() {
-
     val versionName = BuildConfig.VERSION_NAME
     val versionCode = BuildConfig.VERSION_CODE
     val buildType = if (BuildConfig.DEBUG) "DEBUG" else "RELEASE"
-
-    val currentYear = java.util.Calendar
-        .getInstance()
-        .get(java.util.Calendar.YEAR)
+    val currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(
-                horizontal = 20.dp,
-                vertical = 24.dp
-            ),
+            .padding(horizontal = 20.dp, vertical = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
 
-        Text(
-            text = "Мини Заметки",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
-
+        // Убрано: Text("Мини Заметки") — это уже есть в ModernTopAppBar
         Text(
             text = "Простое и быстрое приложение для заметок",
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.tertiary
         )
 
         Text(
@@ -118,9 +105,7 @@ fun InfoLinkCard(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                context.startActivity(
-                    Intent(Intent.ACTION_VIEW, url.toUri())
-                )
+                context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
             },
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
@@ -149,7 +134,7 @@ fun InfoLinkCard(
                 Text(
                     text = subtitle,
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
         }

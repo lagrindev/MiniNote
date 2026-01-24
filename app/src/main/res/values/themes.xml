@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="Theme.MiniNote" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Можно добавить цвета, но не обязательно -->
+    <!-- ✅ Material3 (НЕ MaterialComponents!) -->
+    <style name="Theme.MiniNote" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Цвета -->
     </style>
 
+    <!-- ✅ Splash тоже Material3 -->
     <style name="Theme.MiniNote.Splash" parent="Theme.SplashScreen">
-        <!-- Фон -->
         <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.MiniNote</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
 
-        <!-- Иконка -->
-        <item name="windowSplashScreenAnimatedIcon">
-            @mipmap/ic_launcher_foreground
-        </item>
-
-        <!-- После splash -->
-        <item name="postSplashScreenTheme">
-            @style/Theme.MiniNote
-        </item>
     </style>
-
 </resources>

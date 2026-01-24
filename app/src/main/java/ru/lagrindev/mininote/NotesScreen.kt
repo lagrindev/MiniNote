@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
@@ -31,13 +34,11 @@ fun NotesScreen(
             .fillMaxSize()
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
-
         /* ===== Поле добавления заметки ===== */
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             TextField(
                 value = newNote,
                 onValueChange = { newNote = it },
@@ -56,9 +57,10 @@ fun NotesScreen(
                 )
             )
 
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(12.dp))
 
-            Button(
+            // ✅ Исправленная кнопка с Material 3 цветами
+            FloatingActionButton(
                 onClick = {
                     if (newNote.isNotBlank()) {
                         scope.launch {
@@ -68,14 +70,21 @@ fun NotesScreen(
                     }
                 },
                 shape = RoundedCornerShape(16.dp),
+                containerColor = MaterialTheme.colorScheme.tertiary, // Ваш зеленый цвет
+                contentColor = MaterialTheme.colorScheme.onTertiary,
                 modifier = Modifier
-                    .defaultMinSize(minHeight = 56.dp)
+                    .height(56.dp)
+                    .width(120.dp)
             ) {
-                Text("Добавить")
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = "Добавить заметку",
+                    modifier = Modifier.size(24.dp)
+                )
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         /* ===== Список заметок ===== */
         LazyColumn(
@@ -88,24 +97,29 @@ fun NotesScreen(
                         .fillMaxWidth()
                         .animateContentSize()
                         .combinedClickable(
-                            onClick = {},
+                            onClick = { /* TODO: открыть редактирование */ },
                             onLongClick = {
                                 noteToEdit = note
                                 editedText = note.text
                                 showEditDialog = true
                             }
                         ),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = RoundedCornerShape(20.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
                     ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
-                    Text(
-                        text = note.text,
-                        modifier = Modifier.padding(16.dp),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
+                    Column(
+                        modifier = Modifier.padding(20.dp)
+                    ) {
+                        Text(
+                            text = note.text,
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Normal,
+                            maxLines = 3
+                        )
+                    }
                 }
             }
         }
@@ -115,21 +129,29 @@ fun NotesScreen(
     if (showEditDialog && noteToEdit != null) {
         AlertDialog(
             onDismissRequest = { showEditDialog = false },
-            title = { Text("Редактировать заметку") },
+            title = {
+                Text(
+                    "Редактировать заметку",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Medium
+                )
+            },
             text = {
-                TextField(
+                OutlinedTextField(
                     value = editedText,
                     onValueChange = { editedText = it },
-                    singleLine = true,
+                    singleLine = false,
+                    maxLines = 4,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .defaultMinSize(minHeight = 56.dp),
+                        .defaultMinSize(minHeight = 80.dp),
+                    shape = RoundedCornerShape(12.dp),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = MaterialTheme.colorScheme.surface,
                         unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                         cursorColor = MaterialTheme.colorScheme.primary,
                         focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                        unfocusedIndicatorColor = MaterialTheme.colorScheme.surfaceVariant
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.outline
                     )
                 )
             },
@@ -156,7 +178,10 @@ fun NotesScreen(
                         showEditDialog = false
                     }
                 ) {
-                    Text("Удалить")
+                    Text(
+                        "Удалить",
+                        color = MaterialTheme.colorScheme.error
+                    )
                 }
             }
         )

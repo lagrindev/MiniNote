@@ -1,11 +1,36 @@
 package ru.lagrindev.mininote.ui.theme
 
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// ✅ Новые основные цвета
+val Orange = Color(0xFFFF6202)      // #ff6202 - яркий оранжевый (акценты)
+val DarkBlue = Color(0xFF181C21)    // #181c21 - тёмно-синий (фон/текст)
+val LightGray = Color(0xFFF2F2F2)   // #f2f2f2 - светло-серый (поверхности)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// Удаляем light схему - только тёмная!
+
+val MiniNoteDarkColorScheme = darkColorScheme(
+    // ✅ Primary - оранжевый для кнопок/FAB/акцентов
+    primary = Orange,
+    onPrimary = Color.White,           // Белый текст на оранжевом
+
+    // ✅ Secondary - светло-серый градиент
+    secondary = LightGray,
+    onSecondary = DarkBlue,            // Тёмный текст на светлом
+
+    // ✅ Фоны на основе тёмно-синего
+    background = DarkBlue,             // Главный фон
+    surface = Color(0xFF21262B),       // Карточки (чуть светлее DarkBlue)
+    surfaceContainerHigh = Color(0xFF2A3036), // TopBar/BottomBar
+
+    // ✅ Текст
+    onSurface = LightGray,             // Основной текст
+    onSurfaceVariant = Color(0xFFB0B7C0), // Вторичный текст
+
+    // ✅ Акценты
+    tertiary = Orange,                 // Дублируем оранжевый для FAB/успеха
+    onTertiary = Color.White,
+    error = Color(0xFFFF8A80),         // Красный для ошибок
+    onError = Color.White
+)
