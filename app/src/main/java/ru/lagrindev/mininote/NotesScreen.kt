@@ -12,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -96,6 +97,7 @@ fun NotesScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .animateContentSize()
+                        .clip(RoundedCornerShape(20.dp))
                         .combinedClickable(
                             onClick = { /* TODO: открыть редактирование */ },
                             onLongClick = {
@@ -108,7 +110,7 @@ fun NotesScreen(
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
                     ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(
                         modifier = Modifier.padding(20.dp)
